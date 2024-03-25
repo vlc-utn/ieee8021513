@@ -22,7 +22,7 @@ public:
     void mlme_associate_request(uint64_t owpanID);
     void mlme_disassociate_request(uint64_t owpanID, uint64_t deviceAddress, DisassociationReason_t reason);
     void mlme_get_request(PibAttribute_t attribute);
-    void mlme_set_request(PibAttribute_t attribute, uint64_t* attributeValue);
+    void mlme_set_request(PibAttribute_t attribute, uint64_t attributeValue);
     void mlme_scan_request(uint16_t scanDuration);
     void mlme_start_request(void);
     void mlme_stop_request(uint16_t timeout, bool force);

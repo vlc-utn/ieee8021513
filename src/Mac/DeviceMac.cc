@@ -34,8 +34,12 @@ void DeviceMac::mlme_get_confirm(PibAttribute_t attribute, uint64_t* attributeVa
     send(msg, "confirmOut");
 }
 
-void DeviceMac::mlme_set_confirm(PibAttribute_t attribute, uint64_t* attributeValue, SetStatus_t status) {
+void DeviceMac::mlme_set_confirm(PibAttribute_t attribute, uint64_t attributeValue, SetStatus_t status) {
     MlmeSetConfirm *msg = new MlmeSetConfirm();
+
+    msg->setAttribute(attribute);
+    msg->setAttributeValue(attributeValue);
+    msg->setStatus(status);
 
     msg->setKind(MsgKind_t::MLME_SET_CONFIRM);
     send(msg, "confirmOut");
@@ -172,6 +176,82 @@ void DeviceMac::mlme_get_request(cMessage *msg) {
 
 void DeviceMac::mlme_set_request(cMessage *msg) {
     MlmeSetRequest *xMsg = check_and_cast<MlmeSetRequest *>(msg);
+
+    SetStatus_t status = SetStatus_t::SET_STATUS_SUCCESS;
+
+    switch (xMsg->getAttribute()) {
+            case PibAttribute_t::MAC_MAC_ADDRESS: {
+                status = SetStatus_t::SET_STATUS_FAIL_READ_ONLY;
+                break;
+            }
+
+            case PibAttribute_t::MAC_OWPAN_NAME: {
+                status = SetStatus_t::SET_STATUS_FAIL_READ_ONLY;
+                break;
+            }
+
+            case PibAttribute_t::MAC_OWPAN_ID: {
+                status = SetStatus_t::SET_STATUS_FAIL_READ_ONLY;
+                break;
+            }
+
+            case PibAttribute_t::MAC_ASSOCIATION_TIMEOUT: {
+                this->macAssociationTimeout = xMsg->getAttributeValue();
+                break;
+            }
+
+            case PibAttribute_t::MAC_ASSOCIATION_MAX_RETRIES: {
+                this->macAssociationMaxRetries = xMsg->getAttributeValue();
+                break;
+            }
+
+            case PibAttribute_t::MAC_ASSOCIATION_IDENTIFIER: {
+                status = SetStatus_t::SET_STATUS_FAIL_READ_ONLY;
+                break;
+            }
+
+            case PibAttribute_t::MAC_DEVICE_TIMEOUT: {
+                this->macDeviceTimeout = xMsg->getAttributeValue();
+                break;
+            }
+
+            case PibAttribute_t::MAC_QUEUE_REPORT_TIMEOUT: {
+                this->macQueueReportTimeout = xMsg->getAttributeValue();
+                break;
+            }
+
+            case PibAttribute_t::MAC_MAX_RTS_CW: {
+                this->macMaxRtsCw = xMsg->getAttributeValue();
+                break;
+            }
+
+            case PibAttribute_t::MAC_RETRANSMIT_TIMEOUT: {
+                status = SetStatus_t::SET_STATUS_FAIL_READ_ONLY;
+                break;
+            }
+
+            case PibAttribute_t::MAC_MAX_FRAME_RETRIES: {
+                this->macMaxFrameRetries = xMsg->getAttributeValue();
+                break;
+            }
+
+            case PibAttribute_t::MAC_MAX_REASSEMBLY_TIMEOUT: {
+                this->macMaxReassemblyTimeout = xMsg->getAttributeValue();
+                break;
+            }
+
+            case PibAttribute_t::PHY_IMPLEMENTED_PHY: {
+                status = SetStatus_t::SET_STATUS_FAIL_READ_ONLY;
+                break;
+            }
+
+            default: {
+                status = SetStatus_t::SET_STATUS_FAIL_NON_EXISTENT;
+                break;
+            }
+        }
+
+    this->mlme_set_confirm(xMsg->getAttribute(), xMsg->getAttributeValue(), status);
 
     delete xMsg;
 }

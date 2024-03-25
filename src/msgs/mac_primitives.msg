@@ -116,7 +116,7 @@ message MlmeGetRequest {
 
 message MlmeSetRequest {
     PibAttribute_t attribute;
-    uint8_t attributeValue[];
+    uint64_t attributeValue;
 };
 
 message MlmeScanRequest {
@@ -156,7 +156,7 @@ message MlmeGetConfirm {
 
 message MlmeSetConfirm {
     PibAttribute_t attribute;
-    uint64_t attributeValue[];
+    uint64_t attributeValue;
     SetStatus_t status;
 };
 

@@ -48,8 +48,11 @@ void Dme::mlme_get_request(PibAttribute_t attribute) {
     send(msg, "requestOut");
 }
 
-void Dme::mlme_set_request(PibAttribute_t attribute, uint64_t* attributeValue) {
+void Dme::mlme_set_request(PibAttribute_t attribute, uint64_t attributeValue) {
     MlmeSetRequest *msg = new MlmeSetRequest();
+
+    msg->setAttribute(attribute);
+    msg->setAttributeValue(attributeValue); // Note, owpan Name can't be set, so the maximum size is 48 bits.
 
     msg->setKind(MsgKind_t::MLME_SET_REQUEST);
     send(msg, "requestOut");
