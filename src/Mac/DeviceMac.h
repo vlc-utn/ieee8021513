@@ -18,9 +18,9 @@ protected:
     cMessage *timerLostSync;
 
 public:
-    static const uint8_t aMaxAnnouncementInterval = 1e6; // [slots] (equals 1 second)
+    static constexpr double aMaxAnnouncementInterval = 1e6; // [slots] (equals 1 second)
     static const uint32_t aMaxSyncInterval = 1e6; // [slots] (equals 1 second)
-    static const double aSuperframeSlotDuration = 1e-6; // [s]
+    static constexpr double aSuperframeSlotDuration = 1e-6; // [s]
     static const uint32_t aMacSuperframeLookahead = 8192; // [superframes]
     static const uint8_t aInitialRtsCw = 1;
     static const uint32_t aClockAccuracy = 20; // ppm
@@ -28,10 +28,10 @@ public:
     static const uint16_t aAckWindow = 1024;
 
     static const uint16_t aPhyMaxPsduSize = 2044; // [octets]
-    static const double aPhyMifsDuration = 3e-6; // [seconds]
-    static const double aPhyTuraroundTime = 10e-6; // [seconds]
-    static const double aPhyClockAccuracy = 10e-6; // ppm
-    static const double aPhyOfeSyncAccuracy = 640e-9; // [seconds]
+    static constexpr double aPhyMifsDuration = 3e-6; // [seconds]
+    static constexpr double aPhyTuraroundTime = 10e-6; // [seconds]
+    static constexpr double aPhyClockAccuracy = 10e-6; // ppm
+    static constexpr double aPhyOfeSyncAccuracy = 640e-9; // [seconds]
 
     uint64_t macMacAddress;
     uint8_t macOwpanName[32];
