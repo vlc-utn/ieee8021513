@@ -15,3 +15,46 @@
 
 #include "CoordinatorMac.h"
 
+void CoordinatorMac::handleMessage(cMessage *msg) {
+    if (msg->isSelfMessage()) {
+        this->processSelfMsg(msg);
+    }
+}
+
+void CoordinatorMac::initialize(void) {
+    DeviceMac::initialize();
+    this->numSuperframeSlots = par("numSperframeSlots");
+    this->syncInterval = par("syncInterval");
+
+    if (syncInterval > aMaxSyncInterval) {
+        EV_ERROR << "syncInterval is greater than aMaxSyncInterval\n";
+    }
+
+    this->syncCounter = syncInterval;
+    this->currentSlot = 0;
+    this->currentSuperframe = 0;
+}
+
+
+void CoordinatorMac::processSelfMsg(cMessage *packet) {
+    if (packet == this->timerSlot) {
+        currentSlot++;
+        if (currentSlot == numSuperframeSlots) {
+            currentSlot = 0;
+            currentSuperframe++;
+            if (currentSuperframe == 0xffff) {
+                currentSuperframe = 0;
+            }
+        }
+
+        syncCounter--;
+        if (syncCounter == 0) {
+            syncCounter = syncInterval;
+            // TODO transmit sync element.
+        }
+    }
+}
+
+void CoordinatorMac::fsmSuperframe(void) {
+
+}

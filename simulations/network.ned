@@ -15,9 +15,16 @@
 
 package ieee8021513.simulations;
 
+simple MacCoordinator extends Mac {
+    parameters:
+        int numSuperframeSlots;
+            
+}
+
 simple Mac
 {
     parameters:
+        
 
     gates:
         input requestIn;
