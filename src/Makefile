@@ -33,7 +33,13 @@ PROJECTRELATIVE_PATH = src
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS = $O/Dme/Dme.o $O/Mac/CoordinatorMac.o $O/Mac/DeviceMac.o $O/msgs/mac_primitives_m.o $O/msgs/mpdu_m.o
+OBJS = \
+    $O/Dme/Dme.o \
+    $O/Mac/CoordinatorMac.o \
+    $O/Mac/DeviceMac.o \
+    $O/Mac/primitives.o \
+    $O/msgs/mac_primitives_m.o \
+    $O/msgs/mpdu_m.o
 
 # Message files
 MSGFILES = \

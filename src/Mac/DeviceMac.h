@@ -3,6 +3,7 @@
 
 #include "../msgs/mac_primitives_m.h"
 #include "../msg_kind.h"
+#include "../msgs/mpdu_m.h"
 #include <omnetpp.h>
 
 

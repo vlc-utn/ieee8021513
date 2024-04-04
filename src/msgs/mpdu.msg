@@ -19,7 +19,7 @@ enum MacFrameType_t {
     MANAGEMENT_FRAME = 2;
 };
 
-enum ElementID {
+enum ElementID_t {
     NULL_ELEMENT = 0;
     MANAGEMENT_PROCEDURE_CONTAINER_ELEMENT = 1;
     MULTIPLE_ELEMENT_CONTAINER_ELEMENT = 2;
@@ -74,11 +74,11 @@ packet MacHeader {
     uint64_t receiverAddress;		// 48 bit
     uint64_t transmitterAddress;	// 48 bit
     
-    uint16_t payloadElementID;
+    ElementID_t payloadElementID;
     
     // Sequence Control (optional, for data and management frames)
     uint16_t sequenceNumber;		// 12 bit
-    bool ACKRequest;
+    bool ackRequest;
     // RESERVED 3 bits
     
     // Fragmentation control field (optional, if "fragmenetedFrame")
@@ -86,7 +86,7 @@ packet MacHeader {
     uint8_t lastFragment;			// 4 bit
     // RESERVED 8 bits
     
-    // Relay Control Field (optiona, if "relayedFrame")
+    // Relay Control Field (optional, if "relayedFrame")
     uint64_t relayAddress;			// 48 bit
     // RESERVED 16 bits 
 };

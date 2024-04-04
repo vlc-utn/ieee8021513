@@ -4,4 +4,8 @@ void DeviceMac::initialize(void) {
     this->timerLostSync = new cMessage("timer_lost_sync");
 }
 
+void DeviceMac::handleMessage(cMessage *msg) {
+
+}
+
 
