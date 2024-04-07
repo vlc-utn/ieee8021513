@@ -39,18 +39,7 @@ void CoordinatorMac::txSync(void) {
 
 
 
-void CoordinatorMac::rxSync(uint8_t *payload, uint16_t length) {
-    this->currentSuperframe = (payload[1] << 8) | (payload[0] << 0);
-    this->numSuperframeSlots = (payload[3] << 8) | (payload[2] << 0);
-    this->currentSlot = (payload[5] << 8) | (payload[4] << 0);
 
-    // TODO desyncronization
-
-    // TODO resyncronize clock with the start of the PPDU preamble.
-
-    cancelEvent(timerSlot);
-    scheduleAfter(aSuperframeSlotDuration, timerSlot);
-}
 
 
 
@@ -71,7 +60,7 @@ void CoordinatorMac::handleMessage(cMessage *msg) {
 }
 
 void CoordinatorMac::initialize(void) {
-    DeviceMac::initialize();
+    Mac::initialize();
     this->numSuperframeSlots = par("numSperframeSlots");
     this->syncInterval = par("syncInterval");
 
@@ -79,7 +68,7 @@ void CoordinatorMac::initialize(void) {
         EV_ERROR << "syncInterval can't be zero";
     }
 
-    if (syncInterval > aMaxSyncInterval) {
+    if (syncInterval > aMaxSyncIntervalInSlots) {
         EV_ERROR << "syncInterval is greater than aMaxSyncInterval\n";
     }
 

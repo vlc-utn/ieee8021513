@@ -37,6 +37,7 @@ OBJS = \
     $O/Dme/Dme.o \
     $O/Mac/CoordinatorMac.o \
     $O/Mac/DeviceMac.o \
+    $O/Mac/Mac.o \
     $O/Mac/primitives.o \
     $O/msgs/mac_primitives_m.o \
     $O/msgs/mpdu_m.o

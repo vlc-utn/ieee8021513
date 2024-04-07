@@ -1,16 +1,15 @@
 #ifndef DEVICEMAC_H_
 #define DEVICEMAC_H_
 
-#include "../msgs/mac_primitives_m.h"
-#include "../msg_kind.h"
-#include "../msgs/mpdu_m.h"
+
 #include <omnetpp.h>
+#include "Mac.h"
 
 
 
 using namespace omnetpp;
 
-class DeviceMac : public cSimpleModule {
+class DeviceMac : public Mac {
 
 protected:
     virtual void initialize() override;
@@ -18,61 +17,15 @@ protected:
 
     cMessage *timerLostSync;
 
+
+    uint32_t slotsSinceLastSync;
+    bool isSynchronized;
+
+    void rxSync(uint8_t *payload, uint16_t length);
+    void superframeScheduler(void);
+
 public:
-    static constexpr double aMaxAnnouncementInterval = 1e6; // [slots] (equals 1 second)
-    static const uint32_t aMaxSyncInterval = 1e6; // [slots] (equals 1 second)
-    static constexpr double aSuperframeSlotDuration = 1e-6; // [s]
-    static const uint32_t aMacSuperframeLookahead = 8192; // [superframes]
-    static const uint8_t aInitialRtsCw = 1;
-    static const uint32_t aClockAccuracy = 20; // ppm
-    static const uint8_t aMinFragmentSize = 64;
-    static const uint16_t aAckWindow = 1024;
 
-    static const uint16_t aPhyMaxPsduSize = 2044; // [octets]
-    static constexpr double aPhyMifsDuration = 3e-6; // [seconds]
-    static constexpr double aPhyTuraroundTime = 10e-6; // [seconds]
-    static constexpr double aPhyClockAccuracy = 10e-6; // ppm
-    static constexpr double aPhyOfeSyncAccuracy = 640e-9; // [seconds]
-
-    uint64_t macMacAddress;
-    uint8_t macOwpanName[32];
-    uint64_t macOwpanID;
-    uint16_t macAssociationTimeout;
-    uint8_t macAssociationMaxRetries;
-    uint16_t macAssociationIdentifier;
-    uint16_t macDeviceTimeout;
-
-    uint8_t macQueueReportTimeout;
-    uint8_t macMaxRtsCw;
-    uint32_t macRetransmitTimeout;
-    uint8_t macMaxFrameRetries;
-    uint16_t macMaxReassemblyTimeout;
-
-    PhyType_t phyImplementedPhy;
-
-    bool capExplicitMimoEstimation;
-    bool capFullDuplex;
-    bool capBlockAcknowledgement;
-    bool capInterferenceDetection;
-    bool capMcsrequest;
-    bool capRelayedDevice;
-    bool capRelayDevice;
-
-    void mlme_associate_request(cMessage *msg);
-    void mlme_disassociate_request(cMessage *msg);
-    void mlme_get_request(cMessage *msg);
-    void mlme_set_request(cMessage *msg);
-    void mlme_scan_request(cMessage *msg);
-    void mlme_start_request(cMessage *msg);
-    void mlme_stop_request(cMessage *msg);
-
-    void mlme_associate_confirm(uint64_t owpanID, uint16_t AID, AssociationResult_t associationResult, AssociationStatus_t status);
-    void mlme_disassociate_confirm(uint64_t owpanID, uint64_t deviceAddress, DisassociationReason_t reason, DisassociationStatus_t status);
-    void mlme_get_confirm(PibAttribute_t attribute, uint64_t* attributeValue, GetStatus_t status);
-    void mlme_set_confirm(PibAttribute_t attribute, uint64_t attributeValue, SetStatus_t status);
-    void mlme_scan_confirm(uint8_t* resultList, ScanStatus_t status); // TODO
-    void mlme_start_confirm(StartStatus_t status);
-    void mlme_stop_confirm(StopStatus_t status);
 
 };
 

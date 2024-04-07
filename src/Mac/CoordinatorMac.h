@@ -1,7 +1,7 @@
 #ifndef COORDINATORMAC_H_
 #define COORDINATORMAC_H_
 
-#include "DeviceMac.h"
+#include "Mac.h"
 
 #include <omnetpp.h>
 
@@ -10,7 +10,7 @@
 using namespace omnetpp;
 
 
-class CoordinatorMac : public DeviceMac {
+class CoordinatorMac : public Mac {
 
 protected:
     virtual void initialize() override;
@@ -25,11 +25,11 @@ protected:
 
     void superframeScheduler(void);
 
-    cMessage* timerSlot;
+
     cMessage* timerSuperframe;
 
     /*** Determined by the OWPAN coordinator, arbitrary value ****/
-    uint16_t numSuperframeSlots;    // Amount of slots in a superframe
+
     uint32_t syncInterval;          // Amount of slots in between sync elements, including the sync element itself.
 
 
@@ -38,8 +38,7 @@ protected:
     /*****************************************************/
 
     /****** Used by the superframe scheduler  *********/
-    uint16_t currentSlot;       // Current slot [0; numSuperframeSlots]
-    uint16_t currentSuperframe; // Current superframe [0; 0xffff]
+
     uint8_t* slotState;
 
 
@@ -59,6 +58,7 @@ protected:
 
     void txNull(uint64_t receiverAddress, bool ackRequest);
     void txSync(void);
+
 
 public:
 

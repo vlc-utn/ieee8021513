@@ -1,20 +1,20 @@
 #include "DeviceMac.h"
 
-void DeviceMac::mlme_associate_confirm(uint64_t owpanID, uint16_t AID, AssociationResult_t associationResult, AssociationStatus_t status) {
+void Mac::mlme_associate_confirm(uint64_t owpanID, uint16_t AID, AssociationResult_t associationResult, AssociationStatus_t status) {
     MlmeAssociateConfirm *msg = new MlmeAssociateConfirm();
 
     msg->setKind(MsgKind_t::MLME_ASSOCIATE_CONFIRM);
     send(msg, "confirmOut");
 }
 
-void DeviceMac::mlme_disassociate_confirm(uint64_t owpanID, uint64_t deviceAddress, DisassociationReason_t reason, DisassociationStatus_t status) {
+void Mac::mlme_disassociate_confirm(uint64_t owpanID, uint64_t deviceAddress, DisassociationReason_t reason, DisassociationStatus_t status) {
     MlmeDisassociateConfirm *msg = new MlmeDisassociateConfirm();
 
     msg->setKind(MsgKind_t::MLME_DISASSOCIATE_CONFIRM);
     send(msg, "confirmOut");
 }
 
-void DeviceMac::mlme_get_confirm(PibAttribute_t attribute, uint64_t* attributeValue, GetStatus_t status) {
+void Mac::mlme_get_confirm(PibAttribute_t attribute, uint64_t* attributeValue, GetStatus_t status) {
     MlmeGetConfirm *msg = new MlmeGetConfirm();
 
     msg->setAttribute(attribute);
@@ -34,7 +34,7 @@ void DeviceMac::mlme_get_confirm(PibAttribute_t attribute, uint64_t* attributeVa
     send(msg, "confirmOut");
 }
 
-void DeviceMac::mlme_set_confirm(PibAttribute_t attribute, uint64_t attributeValue, SetStatus_t status) {
+void Mac::mlme_set_confirm(PibAttribute_t attribute, uint64_t attributeValue, SetStatus_t status) {
     MlmeSetConfirm *msg = new MlmeSetConfirm();
 
     msg->setAttribute(attribute);
@@ -46,21 +46,21 @@ void DeviceMac::mlme_set_confirm(PibAttribute_t attribute, uint64_t attributeVal
 }
 
 // TODO
-void DeviceMac::mlme_scan_confirm(uint8_t* resultList, ScanStatus_t status) {
+void Mac::mlme_scan_confirm(uint8_t* resultList, ScanStatus_t status) {
     MlmeScanConfirm *msg = new MlmeScanConfirm();
 
     msg->setKind(MsgKind_t::MLME_SCAN_CONFIRM);
     send(msg, "confirmOut");
 }
 
-void DeviceMac::mlme_start_confirm(StartStatus_t status) {
+void Mac::mlme_start_confirm(StartStatus_t status) {
     MlmeStartConfirm *msg = new MlmeStartConfirm();
 
     msg->setKind(MsgKind_t::MLME_START_CONFIRM);
     send(msg, "confirmOut");
 }
 
-void DeviceMac::mlme_stop_confirm(StopStatus_t status) {
+void Mac::mlme_stop_confirm(StopStatus_t status) {
     MlmeStopConfirm *msg = new MlmeStopConfirm();
 
     msg->setKind(MsgKind_t::MLME_STOP_CONFIRM);
@@ -69,20 +69,20 @@ void DeviceMac::mlme_stop_confirm(StopStatus_t status) {
 
 ////////////////////////////////////////////////////
 
-void DeviceMac::mlme_associate_request(cMessage *msg) {
+void Mac::mlme_associate_request(cMessage *msg) {
     MlmeAssociateRequest *xMsg = check_and_cast<MlmeAssociateRequest *>(msg);
 
     delete xMsg;
 }
 
-void DeviceMac::mlme_disassociate_request(cMessage *msg) {
+void Mac::mlme_disassociate_request(cMessage *msg) {
     MlmeDisassociateRequest *xMsg = check_and_cast<MlmeDisassociateRequest *>(msg);
 
     delete xMsg;
 
 }
 
-void DeviceMac::mlme_get_request(cMessage *msg) {
+void Mac::mlme_get_request(cMessage *msg) {
     MlmeGetRequest *xMsg = check_and_cast<MlmeGetRequest *>(msg);
 
     GetStatus_t status = GetStatus_t::GET_STATUS_SUCCESS;
@@ -174,7 +174,7 @@ void DeviceMac::mlme_get_request(cMessage *msg) {
     delete xMsg;
 }
 
-void DeviceMac::mlme_set_request(cMessage *msg) {
+void Mac::mlme_set_request(cMessage *msg) {
     MlmeSetRequest *xMsg = check_and_cast<MlmeSetRequest *>(msg);
 
     SetStatus_t status = SetStatus_t::SET_STATUS_SUCCESS;
@@ -256,19 +256,19 @@ void DeviceMac::mlme_set_request(cMessage *msg) {
     delete xMsg;
 }
 
-void DeviceMac::mlme_scan_request(cMessage *msg) {
+void Mac::mlme_scan_request(cMessage *msg) {
     MlmeScanRequest *xMsg = check_and_cast<MlmeScanRequest *>(msg);
 
     delete xMsg;
 }
 
-void DeviceMac::mlme_start_request(cMessage *msg) {
+void Mac::mlme_start_request(cMessage *msg) {
     MlmeStartRequest *xMsg = check_and_cast<MlmeStartRequest *>(msg);
 
     delete xMsg;
 }
 
-void DeviceMac::mlme_stop_request(cMessage *msg) {
+void Mac::mlme_stop_request(cMessage *msg) {
     MlmeStopRequest *xMsg = check_and_cast<MlmeStopRequest *>(msg);
 
     delete xMsg;
